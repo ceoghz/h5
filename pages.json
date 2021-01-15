@@ -17,6 +17,13 @@
 				"navigationStyle" : "custom"
 			}
 		},
+		{
+			"path":"pages/order/logistics",
+			"style":{
+				"navigationBarTitleText":"查看物流",
+				"navigationStyle" : "custom"
+			}
+		},
 	
 		{
 			"path":"pages/pay/payorder",

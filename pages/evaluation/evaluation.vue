@@ -5,10 +5,10 @@
 		<view class="evaluation-content">
 			<view class="evaluation-content-top">
 				<view class="edge d-flex">
-					<image style="" src="" mode=""></image>
+					<image style="" :src="productinfo.product_img" mode=""></image>
 					<view class="edge-right d-flex flex-column j-sb">
-						<view class="edge-right-name">森山铁皮枫斗甄选原料优良品种品种品品种品品种品</view>
-						<view class="edge-right-price">¥4320.00</view>
+						<view class="edge-right-name">{{productinfo.product_title}}</view>
+						<view class="edge-right-price">¥{{productinfo.price}}</view>
 					</view>
 				</view>
 			</view>
@@ -61,6 +61,7 @@
 				comment:'',//评论内容
 				start:0,//星级
 				order_details_id:'',//商品id
+				productinfo:'',//商品信息
 			}
 		},
 		components:{
@@ -100,8 +101,8 @@
 					module:'app',
 					action:'product',
 					app:'user_comment',
-					order_details_id:'',
-					anonymous:0,
+					order_details_id:productinfo.id,
+					// anonymous:0,
 					comment:this.comment,
 					start:this.start,
 					images:this.imgArr
@@ -154,6 +155,9 @@
 		},
 		created() {
 			this.nav_height = uni.getStorageSync('nav_height')
+		},
+		onLoad(options) {
+			this.productinfo = JSON.parse(decodeURIComponent(options.productinfo)) 
 		}
 		
 	}

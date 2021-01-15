@@ -63,7 +63,7 @@
 						<view class="order-t-l" >
 							我的订单
 						</view>
-						<view class="order-t-r d-flex a-center" @click="jumpMyOrder" data-id=0>
+						<view class="order-t-r d-flex a-center" @click="jumpMyOrder" data-id=0 data-type=''>
 							<text>查看全部订单</text>
 							<view class="" style="height: 60upx;width:60upx;margin-left: 10upx;">
 								<image style="width: 100%;height: 100%;" src="../../static/img/btn_back.png" mode=""></image>
@@ -98,7 +98,6 @@
 						<view  class="position-relative"  @click="jumpMyOrder"  data-id = 4 data-type='evaluate'>
 							<view  class="position-relative">
 								<image src="../../static/img/icon_payFor(3).png" mode=""></image>
-								<uni-badge v-if="userInfo!==''&& userInfo.dpj!=0"  class="uni-badge-left-margin" :text="userInfo.dpj" type="warning" size="small" />
 								<view    v-if="userInfo!==''&& userInfo.dpj!=0" class="uni-badge-left-margin aa">{{userInfo.dpj}} </view>
 							</view>
 							<text>评价</text>
@@ -106,7 +105,6 @@
 						<view  class="position-relative"  @click="jumpMyOrder"  data-id = 5 data-type='return'>
 							<view  class="position-relative">
 								<image src="../../static/img/icon_payFor(4).png" mode=""></image>
-								<uni-badge v-if="userInfo!==''&& userInfo.th!=0"  class="uni-badge-left-margin" :text="userInfo.th" type="warning" size="small" />
 								<view  v-if="userInfo!==''&& userInfo.th!=0" class="uni-badge-left-margin aa">{{userInfo.th}} </view>
 							</view>
 							<text>退款/售后</text>

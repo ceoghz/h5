@@ -44,7 +44,7 @@
           border-radius: 20rpx;
 }
 .service-content .service-product-main-right {
-  width: calc(100% - 200rpx);
+  width: calc(100% - 250rpx);
   margin-left: 25rpx;
 }
 .service-content .service-product-main-right-1 {

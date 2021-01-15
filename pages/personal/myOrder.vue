@@ -30,7 +30,7 @@
 									<view class="" style="margin-left:20upx;">{{item1.mch_name}}</view>
 									<image src="../../static/img/btn_back.png" style="height: 48upx;width: 48upx;" mode=""></image>
 								</view>
-								<view class="d-flex" v-for="(item2,index) in item1.order_details" :key="index">
+								<view class="d-flex" v-for="(item2,index) in item1.order_details" :key="index" @click="jumporderdetail" :data-id="item2.pid">
 									<image :src="item2.product_img" style="width: 200upx;height: 200upx;margin-left: 20upx;" mode=""></image>
 									<view class="felx-1 pro d-flex flex-column">
 										<view class="pro-name d-felx j-sb">
@@ -74,14 +74,14 @@
 						</view>
 					</view>
 					<!-- //其他状态 -->
-					<view v-else class="order-list1">
+					<view v-else class="order-list1" v-if="item.mch.length > 0">
 						<view class="order-list-1">
-							<view class="abb d-felx flex-column" v-for="(item1,index) in item.mch" :key="index">
+							<view class="abb d-felx flex-column" v-for="(item1,index) in item.mch"  :key="index">
 								<view class="d-felx a-center" style="width: 100%;height: 88upx;display:flex;align-items: center;">
 									<view class="" style="margin-left:20upx;">{{item1.mch_name}}</view>
 									<image src="../../static/img/btn_back.png" style="height: 48upx;width: 48upx;" mode=""></image>
 								</view>
-								<view class="" v-for="(item2,index) in item1.order_details" :key="index">
+								<view class="" v-for="(item2,index) in item1.order_details" :key="index"  @click="jumporderdetail" :data-id="item2.pid">
 									<view class="d-flex" >
 										<image :src="item2.product_img" style="width: 200upx;height: 200upx;margin-left: 20upx;" mode=""></image>
 										<view class="felx-1 pro d-flex flex-column">
@@ -106,16 +106,22 @@
 										</view>
 									</view>
 									<view class="order-list-3">
-											<button  class="btn1"  type="default" size="mini" plain=true>客服</button>
-											<button  class="btn1" v-if="item.status === 0"  type="default" size="mini" plain=true>取消订单</button>
-											<button  class="btn1" @click="jumpRefund" :data-id="item2.id" :data-pid ="item2.p_id" :data-status="item.status"  type="default" size="mini" plain=true>申请退款</button>
-											<!-- <button class="btn2" type="default" size="mini" plain = true>确认收货</button> -->
+											<button  class="btn1" v-if="item2.order_details_status !== 7 "  type="default" size="mini" plain=true>客服</button>
+											<button  class="btn1" v-if="item.status === 0&& item2.order_details_status !== 7"  type="default" size="mini" plain=true>取消订单</button>
+											<button  class="btn1" v-if="item2.order_details_status !== 7 " @click="jumpRefund" :data-id="item2.id" :data-pid ="item2.p_id" :data-status="item.status" :data-productinfo= "item2"  type="default" size="mini" plain=true>申请退款</button>
+											<button class="btn1" v-if="item2.order_details_status === 7 " @click="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>删除订单</button>
+											<button class="btn1" v-if="item2.order_details_status === 2 " @click="jumplogistics"  :data-id = "item2.id"   type="default" size="mini" plain = true>查看物流</button>
+											<button class="btn2" v-if="item2.order_details_status === 2 " @click="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>确认收货</button> 
+											<button class="btn2" v-if="item2.order_details_status === 3 " @click="jumpevaluation" :data-productinfo= "item2" :data-id = "item2.id"  type="default" size="mini" plain = true>去评价</button> 
 									</view>
 									<view class="" style="width: 100%;height: 0;border-top: 2upx solid #F4F4F4;"></view>
 								</view>
 							</view>
 						</view>
 					</view>
+				</view>
+				<view v-if="order_list.length === 0" style="width: 100%;display: flex; justify-content: center;">
+					<image style="height: 560upx;width: 560upx;" src="../../static/img/no_ming.png" mode=""></image>
 				</view>
 			</scroll-view>
 		</view>
@@ -135,7 +141,7 @@ import {calculate_reduce} from "@/utils/util.js"
 				tabData:[
 					{cid:0,pname:'全部',type:''},
 					{cid:1,pname:'待付款',type:'payment'},
-					{cid:2,pname:'代发货',type:'send'},
+					{cid:2,pname:'待发货',type:'send'},
 					{cid:3,pname:'待收货',type:'receipt'},
 					{cid:4,pname:'待评价',type:'evaluate'},
 					{cid:5,pname:'退款/售后',type:'return'},
@@ -150,12 +156,37 @@ import {calculate_reduce} from "@/utils/util.js"
 			Headd
 		},
 		methods:{
+			//跳转评价
+			jumpevaluation(e){
+				let res = e.currentTarget.dataset
+				console.log(res)
+				uni.navigateTo({
+					url:`/pages/evaluation/evaluation?id=${res.id}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
+					icon:'none'
+				})
+			},
+			//跳转订单详情 
+			jumporderdetail(e){
+				let res = e.currentTarget.dataset
+				uni.navigateTo({
+					url:`/pages/personal/orderDetail?id=${res.id}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
+					icon:'none'
+				})
+			},
+			//查看物流
+			jumplogistics(e){
+				let res =e.currentTarget.dataset
+				uni.navigateTo({
+					url:`/pages/order/logistics?id=${res.id}`,
+					icon:'none'
+				})	
+			},
 			//跳转申请退款 
 			jumpRefund(e){
 				console.log(e)
 				let res =e.currentTarget.dataset
 				uni.navigateTo({
-					url:`/pages/order/service?id=${res.id}&status=${res.status}&pid=${res.pid}`,
+					url:`/pages/order/service?id=${res.id}&status=${res.status}&pid=${res.pid}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
 					icon:'none'
 				})	
 			},
@@ -209,6 +240,27 @@ import {calculate_reduce} from "@/utils/util.js"
 				// 	}
 				// })
 			},
+			//删除交易关闭订单
+			delGuan(e){
+				console.log(e)
+				let id = e.currentTarget.dataset.id
+				this.$http.post(
+				'',
+				{
+					access_id:uni.getStorageSync("access_id"),
+					module:'app',
+					action:'order',
+					app:'delOrderDetails',
+					store_id:1,
+					store_type:2,
+					order_details_id:id
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code == 200){
+						this.requestOrderList({})
+					}
+				})
+			},
 			//订单列表
 			requestOrderList({type='',page=1,keyword=''}){
 				this.$http.post(
@@ -239,8 +291,8 @@ import {calculate_reduce} from "@/utils/util.js"
 		},
 		onLoad(options) {
 			console.log("options",options)
-			let type = options.type || ''
-			this.order_type = options.type || ''
+			let type = options.type === "true"?'':options.type
+			this.order_type = options.type === "true"?'':options.type
 			console.log(type)
 			this.requestOrderList({type})
 			this.fenId = Number(options.id)

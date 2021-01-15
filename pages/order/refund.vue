@@ -6,10 +6,10 @@
 			<view class="refund-product">
 				<view class="refund-product-top" >退款商品</view>
 				<view class="refund-product-main">
-					<image src="../../static/img/4@2x.png" mode=""></image>
+					<image :src="productinfo.product_img" mode=""></image>
 					<view class="refund-product-main-right">
-						<view class="refund-product-main-right-1">森山直供铁皮枫斗100克官方森山 直供铁皮枫斗100克官方</view>
-						<view class="refund-product-main-right-2">型号：标准100g/盒</view>
+						<view class="refund-product-main-right-1">{{productinfo.product_title}}</view>
+						<view class="refund-product-main-right-2">{{productinfo.attribute_str}}</view>
 					</view>
 				</view>
 			</view>
@@ -103,6 +103,8 @@
 					{id:5,name:'其他',isChecked:false},
 				],
 				reason:'请选择',//退款类型
+				productinfo:'',
+				type:'',//退款类型
 			}
 		},
 		components:{
@@ -140,7 +142,6 @@
 			},
 			//提交售后请求
 			submitRequest(){
-			
 				if(this.reason === '请选择'){
 					uni.showToast({
 						title:'请选择退款类型',
@@ -162,7 +163,7 @@
 					action:'order',
 					app:'refund',
 					order_details_id:'',///订单详情id
-					type:'1',//退款类型
+					type:this.type,//退款类型
 					reason:this.reason,
 					explain:this.why,
 					images:this.imgArr
@@ -212,6 +213,11 @@
 				    }
 				});
 			}
+		},
+		onLoad(options) {
+			console.log(options)
+			this.productinfo = JSON.parse(decodeURIComponent(options.productinfo))
+			this.type = options.type
 		},
 		created() {
 			this.nav_height = uni.getStorageSync('nav_height')

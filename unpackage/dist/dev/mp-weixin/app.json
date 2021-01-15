@@ -2,6 +2,7 @@
   "pages": [
     "pages/tabBar/my",
     "pages/personal/myOrder",
+    "pages/order/logistics",
     "pages/pay/payorder",
     "pages/pay/paycomplete",
     "pages/my/footprint",

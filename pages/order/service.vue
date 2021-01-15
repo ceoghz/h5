@@ -6,17 +6,17 @@
 			<view class="service-product">
 				<view class="service-product-top" >退款商品</view>
 				<view class="service-product-main" >
-					<image src="../../static/img/4@2x.png" mode=""></image>
+					<image :src="productinfo.product_img" mode=""></image>
 					<view class="service-product-main-right">
-						<view class="service-product-main-right-1">森山直供铁皮枫斗100克官方森山 直供铁皮枫斗100克官方</view>
-						<view class="service-product-main-right-2">型号：标准100g/盒</view>
+						<view class="service-product-main-right-1">{{productinfo.product_title}}</view>
+						<view class="service-product-main-right-2">{{productinfo.attribute_str}}</view>
 					</view>
 				</view>
 			</view>
 			<view class="service-type">
 				<view class="service-type-top" >选择服务类型</view>
 				<view class="service-type-main" >
-					<view v-if="status === '1'" class="service-type-main-item" @click="jumpRefund">
+					<view v-if="status === '1' || status === '2'" class="service-type-main-item" @click="jumpRefund" data-type = "2">
 						<image class="item-l" style="height: 74upx;width: 74upx;margin-left: 20upx;" src="../../static/img/icon_tuihuo.png" mode=""></image>
 						<view class="item-c">
 							<view class="">我要退款（无需退货）</view>
@@ -24,7 +24,7 @@
 						</view>
 						<image style="height: 60upx;width: 60upx;margin-right: 20upx;"  src="../../static/img/btn_back.png" mode=""></image>
 					</view>
-					<view v-else class="service-type-main-item" style="margin-bottom: 20upx;" >
+					<view v-if="status ==='2'" class="service-type-main-item" style="margin-bottom: 20upx;"  @click="jumpRefund" data-type = "1" >
 						<image class="item-l" style="height: 74upx;width: 74upx;margin-left: 20upx;" src="../../static/img/icon_tuihuo.png" mode=""></image>
 						<view class="item-c">
 							<view class="">我要退货退款</view>
@@ -47,15 +47,17 @@
 				status:0,//接收订单状态
 				id:'', //订单id
 				pid:'',//商品id
+				productinfo:'',//商品信息
 			}
 		},
 		components:{
 			Head
 		},
 		methods:{
-			jumpRefund(){
+			jumpRefund(e){
+				let res = e.currentTarget.dataset
 				uni.navigateTo({
-					url:'/pages/order/refund'
+					url:`/pages/order/refund?productinfo=${encodeURIComponent( JSON.stringify(this.productinfo))}&type=${res.type}`
 				})
 			},
 			//获取商品信息
@@ -79,6 +81,8 @@
 			this.status = options.status
 			this.id = options.id
 			this.pid = options.pid
+			this.productinfo = JSON.parse(decodeURIComponent(options.productinfo ))
+			console.log( this.productinfo)
 			this.pruductInfo()
 		},
 		created() {
@@ -124,7 +128,7 @@
 					border-radius: 20upx;
 				}
 				&-right{
-					width: calc(100% - 200upx);
+					width: calc(100% - 250upx);
 					margin-left: 25upx;
 					&-1{
 						font-size: 28upx;
