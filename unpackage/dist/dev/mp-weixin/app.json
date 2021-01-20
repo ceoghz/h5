@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/tabBar/home",
+    "pages/goods/allGoods",
     "pages/order/confirmorder",
     "pages/search/search",
     "pages/tabBar/my",
@@ -36,8 +37,7 @@
     "pages/goods/alikeGoods",
     "pages/goods/goodsDetail",
     "pages/aboutGoods/allPing",
-    "pages/aboutGoods/service",
-    "pages/personal/orderDetail"
+    "pages/aboutGoods/service"
   ],
   "subPackages": [],
   "window": {

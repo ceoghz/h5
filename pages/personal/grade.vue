@@ -1,13 +1,9 @@
 <template>
 	<view class="fen">
-		<Headd></Headd>
-		<view class="head">
-			<view class="title">
-				<view class="back" @click="back()"><image src="../../static/img/back.png"></image></view>
-				<view class="title-b">
-					<text>我的积分</text>
-				</view>
-			</view>
+		<view class="header">
+			<Head title="我的积分"></Head>
+			<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
+			<view class="grade-gui"><view>使用说明</view></view>
 		</view>
 	    <view class="main">
 			<view class="totalZ">
@@ -48,18 +44,22 @@
 </template>
 
 <script>
-	import heads from "../../components/head.vue"
+	import Head from "@/components/head.vue"
 	export default{
 		components: {
-
+            Head
 		},
 		data(){
 			return{
+				nav_height:0,
 				totalData:{},//总数据
 				selectName:'全部明细',
 				gradeData:[],//明细数据
 				ifGrade:'',
 			}
+		},
+		created() {
+			this.nav_height = uni.getStorageSync('nav_height')
 		},
 		onLoad(){
 			this.init()

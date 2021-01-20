@@ -1,1 +1,1 @@
-<view><block wx:for="{{abb}}" wx:for-item="item" wx:for-index="index"><view><button type="default" data-id="{{item.id}}" data-event-opts="{{[['tap',[['btnClick',['$event']]]]]}}" bindtap="__e">{{item.name}}</button></view></block></view>
+<view class="data-v-dfcb27ae"><block wx:for="{{abb}}" wx:for-item="item" wx:for-index="index"><view class="data-v-dfcb27ae"><button type="default" data-id="{{item.id}}" data-event-opts="{{[['tap',[['btnClick',['$event']]]]]}}" bindtap="__e" class="data-v-dfcb27ae">{{item.name}}</button></view></block></view>

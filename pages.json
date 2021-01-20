@@ -10,6 +10,13 @@
 			}
 		},
 		{
+			"path": "pages/goods/allGoods",
+			"style": {
+				"navigationBarTitleText": "二级分类",
+				"navigationStyle" : "custom"
+			}
+		},
+		{
 			"path":"pages/order/confirmorder",
 			"style": {
 				"navigationBarTitleText": "确认订单",
@@ -278,14 +285,9 @@
 				"navigationBarTitleText": "客服",
 				"navigationStyle" : "custom"
 			}
-		},
-		{
-			"path": "pages/personal/orderDetail",
-			"style": {
-				"navigationBarTitleText": "订单详情",
-				"navigationStyle" : "custom"
-			}
 		}
+		
+		
 		
 	],
 	"globalStyle": {
