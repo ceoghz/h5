@@ -50,7 +50,7 @@
 		data(){
 			return{
 				nav_height:0,
-				startDate: "2018-05-02",
+				startDate: "1970-01-01",
 				endDate: "2022-09-20",
 				pickerDate: '2020-11-25',
 				type:'center',
@@ -203,7 +203,7 @@
 			},
 		},
 		onLoad(options) {
-			console.log(options)
+			console.log('options',options)
 			this.nav_height = uni.getStorageSync("nav_height")
 			this.Nickname = options.user_name
 			this.headimgurl = options.headimgurl

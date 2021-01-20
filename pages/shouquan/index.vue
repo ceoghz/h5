@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import {mapMutations,mapState} from 'vuex'
 	export default{
 		data(){
 			return{
@@ -27,8 +28,11 @@
 				iv:''
 			}
 		},
-	
+		computed:{
+			...mapState(['access_id'])
+		},
 		methods:{
+			...mapMutations(['SET_ACCESS_ID']),
 			requestAuthorization(){
 				let adr_info = uni.getStorageSync("address_info")
 				console.log('adr_info',adr_info)
@@ -55,6 +59,8 @@
 							icon:'none'
 						})
 						uni.setStorageSync("access_id",res.data.access_id)
+						this.SET_ACCESS_ID(res.data.access_id)
+						console.log(this.access_id)
 						console.log(666)
 						uni.switchTab({
 							url:'/pages/tabBar/my',
@@ -103,6 +109,7 @@
 					}
 				});
 			},
+	
 		},
 		mounted() {
 			

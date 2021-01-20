@@ -1,13 +1,13 @@
 <template>
 	<view class="all-product" >
 		<view class="similar-content-main">
-			<view class="similar-product-list" v-for="(index) in 10" :key= index >
-				<image src="../../static/img/4@2x.png" mode=""></image>
-				<view class="pro-name">森山铁皮枫斗甄选原料优良品种 100g</view>
+			<view class="similar-product-list"  v-for="(item,index) in shopInfo.list" :key= index @click="jumpGoodsDetail(item.id)">
+				<image :src="item.imgurl" mode=""></image>
+				<view class="pro-name"> {{item.product_title}}</view>
 				<view class="shop">官方授权 品牌直营</view>
 				<view class="pro-price d-flex a-center j-sb">
-					<view class="" style="font-size: 24upx;color: #FA6E39;">￥4320.00</view>
-					<view class="" style="font-size: 20upx;color: #BABABA;">销量：8888件</view>
+					<view class="" style="font-size: 24upx;color: #FA6E39;">￥{{item.price}}</view>
+					<view class="" style="font-size: 20upx;color: #BABABA;">销量：{{item.volume}}件</view>
 				</view>
 			</view>
 		</view>
@@ -16,7 +16,20 @@
 
 <script>
 	export default{
-		props:['isTab']
+		props:['isTab','shopInfo'],
+		data(){
+			return{
+				
+			}
+		},
+		methods:{
+			//跳转到商品详情页面
+			jumpGoodsDetail(id){
+				uni.navigateTo({
+					url:`/pages/goods/goodsDetail?id=${id}`
+				})
+			},
+		}
 	}
 </script>
 

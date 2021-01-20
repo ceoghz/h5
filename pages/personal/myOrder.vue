@@ -25,12 +25,12 @@
 					<!-- //待付款 -->
 					<view v-if="item.status === 0" class="order-list" >
 						<view class="order-list-1">
-							<view class="abb d-felx flex-column" v-for="(item1,index) in item.mch" :key="index">
-								<view class="d-felx a-center" style="width: 100%;height: 88upx;display:flex;align-items: center;">
+							<view class="abb d-felx flex-column" v-for="(item1,index) in item.mch" :key="index" >
+								<view class="d-felx a-center"  @tap="jumpShop(item1.mch_id)"  style="width: 100%;height: 88upx;display:flex;align-items: center;">
 									<view class="" style="margin-left:20upx;">{{item1.mch_name}}</view>
 									<image src="../../static/img/btn_back.png" style="height: 48upx;width: 48upx;" mode=""></image>
 								</view>
-								<view class="d-flex" v-for="(item2,index) in item1.order_details" :key="index" @click="jumporderdetail" :data-id="item2.pid">
+								<view class="d-flex" v-for="(item2,index) in item1.order_details"  @click="jumporderdetail" :data-id="item2.id" :key="index">
 									<image :src="item2.product_img" style="width: 200upx;height: 200upx;margin-left: 20upx;" mode=""></image>
 									<view class="felx-1 pro d-flex flex-column">
 										<view class="pro-name d-felx j-sb">
@@ -77,11 +77,11 @@
 					<view v-else class="order-list1" v-if="item.mch.length > 0">
 						<view class="order-list-1">
 							<view class="abb d-felx flex-column" v-for="(item1,index) in item.mch"  :key="index">
-								<view class="d-felx a-center" style="width: 100%;height: 88upx;display:flex;align-items: center;">
-									<view class="" style="margin-left:20upx;">{{item1.mch_name}}</view>
+								<view class="d-felx a-center"   @tap="jumpShop(item1.mch_id)"  style="width: 100%;height: 88upx;display:flex;align-items: center;">
+									<view style="margin-left:20upx;">{{item1.mch_name}}</view>
 									<image src="../../static/img/btn_back.png" style="height: 48upx;width: 48upx;" mode=""></image>
 								</view>
-								<view class="" v-for="(item2,index) in item1.order_details" :key="index"  @click="jumporderdetail" :data-id="item2.pid">
+								<view class="" v-for="(item2,index) in item1.order_details" :key="index" @click="jumporderdetail" :data-id="item2.id"  >
 									<view class="d-flex" >
 										<image :src="item2.product_img" style="width: 200upx;height: 200upx;margin-left: 20upx;" mode=""></image>
 										<view class="felx-1 pro d-flex flex-column">
@@ -106,13 +106,15 @@
 										</view>
 									</view>
 									<view class="order-list-3">
-											<button  class="btn1" v-if="item2.order_details_status !== 7 "  type="default" size="mini" plain=true>客服</button>
+											<button  class="btn1"   type="default" size="mini" plain=true>客服</button>
 											<button  class="btn1" v-if="item.status === 0&& item2.order_details_status !== 7"  type="default" size="mini" plain=true>取消订单</button>
-											<button  class="btn1" v-if="item2.order_details_status !== 7 " @click="jumpRefund" :data-id="item2.id" :data-pid ="item2.p_id" :data-status="item.status" :data-productinfo= "item2"  type="default" size="mini" plain=true>申请退款</button>
+											<button  class="btn1" v-if="item2.order_details_status == 0 || item2.order_details_status == 1|| item2.order_details_status == 2 " @click="jumpRefund" :data-id="item2.id" :data-pid ="item2.p_id" :data-status="item.status" :data-productinfo= "item2"  type="default" size="mini" plain=true>申请退款</button>
 											<button class="btn1" v-if="item2.order_details_status === 7 " @click="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>删除订单</button>
-											<button class="btn1" v-if="item2.order_details_status === 2 " @click="jumplogistics"  :data-id = "item2.id"   type="default" size="mini" plain = true>查看物流</button>
+											<button class="btn1" v-if="item2.order_details_status === 2 || item2.order_details_status === 3|| item2.order_details_status == 12 || item2.order_details_status == 5" @click="jumplogistics"  :data-id = "item2.id"   type="default" size="mini" plain = true>查看物流</button>
 											<button class="btn2" v-if="item2.order_details_status === 2 " @click="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>确认收货</button> 
+											<button class="btn1" v-if="item2.order_details_status == 3 || item2.order_details_status == 5" @click="joinCart"  :data-id = "item2.id"  type="default" size="mini" plain = true>加入购物车</button>
 											<button class="btn2" v-if="item2.order_details_status === 3 " @click="jumpevaluation" :data-productinfo= "item2" :data-id = "item2.id"  type="default" size="mini" plain = true>去评价</button> 
+											<button class="btn1" v-if="item2.order_details_status == 12" @click="jumpevaluation" :data-productinfo= "item2" :data-id = "item2.id"  type="default" size="mini" plain = true>撤销申请</button> 
 									</view>
 									<view class="" style="width: 100%;height: 0;border-top: 2upx solid #F4F4F4;"></view>
 								</view>
@@ -156,6 +158,15 @@ import {calculate_reduce} from "@/utils/util.js"
 			Headd
 		},
 		methods:{
+			//跳转到店铺
+			jumpShop(shop_id){
+				// let res = e.currentTarget.dataset
+				console.log(shop_id)
+				// uni.navigateTo({
+				// 	url:`/pages/shop/shop?shop_id=${shop_id}`,
+				// 	icon:'none'
+				// })
+			},
 			//跳转评价
 			jumpevaluation(e){
 				let res = e.currentTarget.dataset
@@ -169,7 +180,7 @@ import {calculate_reduce} from "@/utils/util.js"
 			jumporderdetail(e){
 				let res = e.currentTarget.dataset
 				uni.navigateTo({
-					url:`/pages/personal/orderDetail?id=${res.id}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
+					url:`/pages/personal/orderDetail?id=${res.id}`,
 					icon:'none'
 				})
 			},
@@ -219,26 +230,48 @@ import {calculate_reduce} from "@/utils/util.js"
 				})
 				return arr
 			},
+			//加入购物车e
+			joinCart(e){
+				let res =e.currentTarget.dataset
+				console.log(res)
+				this.$http.post("",{
+					access_id:uni.getStorageSync("access_id"),
+					store_id:1,
+					store_type:2,
+					module:'app',
+					action:'order',
+					app:'add_cart',
+					order_details_id:res.id
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code){
+						uni.showToast({
+							title:res.data.message,
+							icon:'none'
+						})
+					}
+				})
+			},
 			//取消待支付订单
 			cancelOrder(order_id){
 				console.log(order_id)
-				// this.$http.post("",{
-				// 	access_id:uni.getStorageSync("access_id"),
-				// 	store_id:1,
-				// 	store_type:2,
-				// 	module:'app',
-				// 	action:'order',
-				// 	app:'removeOrder',
-				// 	order_id:order_id
-				// }).then(res=>{
-				// 	console.log(res)
-				// 	if(res.data.code){
-				// 		uni.showToast({
-				// 			title:res.data.message,
-				// 			icon:'none'
-				// 		})
-				// 	}
-				// })
+				this.$http.post("",{
+					access_id:uni.getStorageSync("access_id"),
+					store_id:1,
+					store_type:2,
+					module:'app',
+					action:'order',
+					app:'removeOrder',
+					order_id:order_id
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code){
+						uni.showToast({
+							title:res.data.message,
+							icon:'none'
+						})
+					}
+				})
 			},
 			//删除交易关闭订单
 			delGuan(e){

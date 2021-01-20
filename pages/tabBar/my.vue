@@ -16,7 +16,7 @@
 							<text v-if="userInfo!==''">{{userInfo.user_name}}</text>
 							<!-- #endif -->
 							<!-- #ifdef H5 -->
-							<button  class="shouquan"  size="mini" plain=true>登录</button>
+							<button  class="shouquan"   size="mini" plain=true>登录</button>
 							<!-- #endif -->
 						</view>
 					</view>
@@ -133,6 +133,7 @@
 <script>
 	import uniBadge from '@/components/uni/uni-badge/uni-badge.vue';
 	import Circle  from   '@/components/circle.vue'
+	import {is_shouquan} from "@/utils/util.js"
 	export default{
 		data(){
 			return{
@@ -142,7 +143,7 @@
 					{img_src:'../../static/img/icon_collection@2x(2).png',name:'在线客服',adr:'/pages/personal/address'},
 					{img_src:'../../static/img/icon_collection@2x(3).png',name:'关于我们',adr:'/pages/personal/address'},
 					{img_src:'../../static/img/icon_collection@2x(4).png',name:'分享好友',adr:'/pages/personal/address'},
-					{img_src:'../../static/img/icon_collection(5).png',name:'浏览足迹',adr:'/pages/personal/address'}
+					{img_src:'../../static/img/icon_collection(5).png',name:'浏览足迹',adr:'/pages/my/footprint'}
 				],
 				userInfo:'',//用户信息
 			}
@@ -153,6 +154,7 @@
 		},
 		onLoad() {
 			console.log(11)
+			is_shouquan()
 		},
 		onShow(){
 			this.requestUserInfo()

@@ -1,6 +1,10 @@
 {
   "pages": [
+    "pages/tabBar/home",
+    "pages/order/confirmorder",
+    "pages/search/search",
     "pages/tabBar/my",
+    "pages/order/after",
     "pages/personal/myOrder",
     "pages/order/logistics",
     "pages/pay/payorder",
@@ -8,6 +12,7 @@
     "pages/my/footprint",
     "pages/coupons/coupons",
     "pages/personal/message",
+    "pages/personal/modify",
     "pages/evaluation/evaluation",
     "pages/shop/shop",
     "pages/shouquan/index",
@@ -24,7 +29,6 @@
     "pages/msg/history",
     "pages/login/loginH5",
     "pages/tabBar/cart",
-    "pages/tabBar/home",
     "pages/personal/login",
     "pages/personal/addAddress",
     "pages/goods/erGoods",

@@ -20,7 +20,7 @@
 						</view>
 						<view class="" style="width:100%;">
 							<view style="width:100%;font-size:40upx;font-weight: 600;color: #333333;margin-bottom: 15upx;">为你推荐</view>
-							<view class=" recommended" style="" v-for="(item,index) in products" :key="index"> 
+							<view class=" recommended" @click="jumpGoodsDetail(item.id)" style="" v-for="(item,index) in products" :key="index"> 
 								<image  :src="item.image_url" mode=""></image>
 								<view class="felx-1 recommended_right">
 									<view class="d-flex flex-column j-sb" style="height: 100%;">
@@ -29,7 +29,7 @@
 											<view class="introduce_l">
 												{{item.subtitle}}
 											</view>
-											<view class="introduce_r">找相似</view>
+											<view class="introduce_r" @click="jumpSimilar(item.id)">找相似</view>
 										</view>
 										<view class="product_price d-flex j-sb a-center">
 											<view class="product_price_l">
@@ -116,6 +116,18 @@
 		// 	// 如果不是则不执行操作				
 		// },
 		methods: {
+			//跳转到相似
+			jumpSimilar(id){
+				uni.navigateTo({
+					url:`/pages/goods/alikeGoods?id=${id}`
+				})
+			},
+			//跳转到商品详情页面
+			jumpGoodsDetail(id){
+				uni.navigateTo({
+					url:`/pages/goods/goodsDetail?id=${id}`
+				})
+			},
 			scroll (e) {
 				//记录scroll  位置
 				this.oldScrollTop = e.detail.scrollTop
@@ -137,8 +149,11 @@
 			},
 			selectType1(item) {
 				console.log('item',item)
+				uni.navigateTo({
+					url:`/pages/goods/erGoods?id=${item.cid}&pname=${item.pname}`
+				})
 			},
-			// 更换颜色
+			// 更换颜色	
 			selected: function(val){
 				return (val === this.index1?this.selectedColor+" !important":"")
 			},

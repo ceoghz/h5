@@ -60,7 +60,7 @@
 						<image :src="mch.logo_url"></image>{{mch.name}}
 					</view>
 					<view class="store_1 store_fen">分享店铺</view>
-					<view class="store_1 store_go">进店逛逛</view>
+					<view class="store_1 store_go" @click="jumpShop(goodsData.mch_id)">进店逛逛</view>
 				</view>
 				<view class="store_number">
 					<view style="border-right:2px solid #F4F4F4">
@@ -86,7 +86,6 @@
 				<view class='bottom_left'>
 					<view class="left_list">
 						<view class="list_img">
-							
 							<image v-if="!ifShou" src="../../static/img/shou_0.png" @click="shou()"></image>
 							<image v-else src="../../static/img/shou_1.png" @click="cancelShou()"></image>
 						</view>
@@ -108,8 +107,8 @@
 					</view>
 				</view>
 				<view class="bottom_right" v-if="ifKu">
-					<view class="add_shop" @click="skuKey = true">加入购物车</view>
-					<view class="go_shop">立即购买</view>
+					<view class="add_shop" @click="cartClick">加入购物车</view>
+					<view class="go_shop" @click="buyClick" >立即购买</view>
 				</view>
 				<view class="bottom_right" v-else>
 					<view class="no-ku">库存不足</view>
@@ -122,7 +121,7 @@
 				:mode="skuMode"
 				@open="openSkuPopup"
 				@close="closeSkuPopup"
-				@add-cart="addCart"
+				@add-cart="confirm"
 				@buy-now="buyNow"
 			></vk-data-goods-sku-popup>
 			<view class="toast" v-if="ifToast">
@@ -159,7 +158,9 @@
 		   uniPopupMessage,
 		   uniPopupDialog,
 		   specificationsnew,
-		   uniNumberBox
+		   uniNumberBox,
+		   type:'cart',
+		   productArr:[],
 		},
 		data(){
 			return{
@@ -211,6 +212,41 @@
 			// this.getlist();
 		},
 		methods:{
+			
+			jumpShop(id){
+				console.log(id)
+				uni.navigateTo({
+					url:`/pages/shop/shop?id=${id}`
+				})
+			},
+			jumpOrder(selectShop){
+			   selectShop.sku =  this.goodsData.sku
+				uni.navigateTo({
+					url:`/pages/order/confirmorder?shopSku=${encodeURIComponent(JSON.stringify(selectShop))}`,
+					success() {
+						console.log("跳转成功")
+					}
+				})
+			},
+			cartClick(){
+				this.skuKey = true
+				this.type = 'cart'
+			},
+			//
+			buyClick(){
+				this.skuKey = true
+				this.type = 'buy'
+			},
+			confirm(selectShop){
+				if(this.type == 'cart'){
+					this.addCart(selectShop)
+				}else{
+					console.log("buy")
+					console.log(selectShop)
+					this.jumpOrder(selectShop)
+					// this.confirmOrder(selectShop)
+				}
+			},
 			//初始化
 			init(){
 				this.$http.post(
@@ -228,7 +264,6 @@
 					console.log(res,'hh')
 					this.goodsData=res.data.data
 					this.goodsP=[this.goodsData.price.split('.')[0],this.goodsData.price.split('.')[1]]
-					
 					this.comments=res.data.data.comments
 					this.mch=res.data.data.mch
 					this.carNum=Number(res.data.data.cart_num)
@@ -292,14 +327,14 @@
 								"goods_id":this.goodsId,
 								"goods_name":this.goodsData.product_title,
 								"image":item.img_url,
-								"price":item.price,
+								"price":(item.price)*100,
 								"sku_name":obj2,
 								"sku_name_arr":str2,
 								"stock":item.num
 							})
 						}
 					})
-					console.log(guiData,'bbb')
+					console.log(guiData,'bbbpp')
 					
 				})
 			},
@@ -314,6 +349,7 @@
 				addCartFn(obj){
 					
 				},
+			
 				// 确认加入购物车按钮
 				addCart(selectShop){
 					console.log(selectShop,"监听 - 加入购物车");

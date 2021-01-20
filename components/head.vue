@@ -1,11 +1,11 @@
 <template>
 	<view class="heade" :style="{height:BoxHeight}"> 
-		<view class="heade-top" :style="{height: halfWidth}"></view>
-		<view class="heade-bottom" :style="{height:bot_height}">
+		<view class="heade-top" :style="{height: halfWidth,background:bgColor}"></view>
+		<view class="heade-bottom" :style="{height:bot_height,background:bgColor}">
 			<view v-if="isBack" class="head-back" @click="backClick">
 				<image src="../static/img/back.png" style="height:100%;width: 100%" mode=""></image>
 			</view>
-			<view class="head-title">
+			<view class="head-title" :style="{color:Color}">
 				{{title}}
 			</view>
 		</view>
@@ -23,6 +23,14 @@
 			isBack:{
 				type:Boolean,
 				default:true
+			},
+			bgColor:{
+				type:String,
+				default:'#ffffff'
+			},
+			Color:{
+				type:String,
+				default:'#000000'
 			}
 		},
 		data(){
@@ -32,9 +40,7 @@
 		},
 		methods:{
 			backClick(){
-				uni.navigateBack({
-					delta:1
-				})
+				uni.navigateBack({delta:1})
 			}
 		},
 		computed:{
@@ -72,7 +78,7 @@
 
 <style lang="less" scoped>
 	.heade{
-		background: #FFFFFF;
+		// background: #FFFFFF;
 		width: 100%;
 		position: fixed;
 		left: 0;
@@ -80,7 +86,7 @@
 		z-index: 9999;
 		.heade-top{
 			width: 100%;
-			background: #FFFFFF;
+			// background: #FFFFFF;
 		}
 		.heade-bottom{
 			width: 100%;

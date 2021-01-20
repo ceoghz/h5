@@ -1,15 +1,44 @@
 {
 
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages  优惠卷 店铺首页
-	{
-		"path": "pages/tabBar/my",
-		"style": {
-			"navigationBarTitleText": "我的",
-			"navigationStyle" : "custom",
-			 "enablePullDownRefresh": true,  //设置为true表示当前页面开启下拉刷新
-			"backgroundTextStyle": "dark"
-		}
-	},
+	
+		{
+			"path": "pages/tabBar/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle" : "custom"
+			}
+		},
+		{
+			"path":"pages/order/confirmorder",
+			"style": {
+				"navigationBarTitleText": "确认订单",
+				"navigationStyle" : "custom"
+			}
+		},
+		{
+			"path":"pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"navigationStyle" : "custom"
+			}
+		},
+		{
+			"path": "pages/tabBar/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle" : "custom",
+				 "enablePullDownRefresh": true,  //设置为true表示当前页面开启下拉刷新
+				"backgroundTextStyle": "dark"
+			}
+		},
+		{
+			"path": "pages/order/after",
+			"style": {
+				"navigationBarTitleText": "退款售后",
+				"navigationStyle" : "custom"
+			}
+		},
 		{
 			"path":"pages/personal/myOrder",
 			"style":{
@@ -57,6 +86,13 @@
 			"path":"pages/personal/message",
 			"style":{
 				"navigationBarTitleText":"消息",
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path":"pages/personal/modify",
+			"style":{
+				"navigationBarTitleText":"修改地址",
 				"navigationStyle":"custom"
 			}
 		},
@@ -185,13 +221,6 @@
 		},			
 		
 		
-		{
-			"path": "pages/tabBar/home",
-			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationStyle" : "custom"
-			}
-		},
 		
 		{
 			"path":"pages/personal/login",

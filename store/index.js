@@ -12,6 +12,7 @@ const store = new Vuex.Store({
         colorIndex: 0,
         colorList: ['#FF0000','#00FF00','#0000FF'],
 		data_height:'', //导航条高度
+		access_id:'',//登录凭证
 	},
 	mutations: {
 		login(state, provider) {
@@ -38,6 +39,9 @@ const store = new Vuex.Store({
 			console.log(8888)
 		    state.data_height = data_height
 		},
+		SET_ACCESS_ID(state,access_id){
+			state.access_id = access_id
+		}
 	},
     getters:{
         currentColor(state){

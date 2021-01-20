@@ -169,6 +169,7 @@
 		/* #ifndef APP-NVUE */
 		z-index: 99;
 		/* #endif */
+		z-index: 10000000;
 	}
 
 	.uni-popup__mask {

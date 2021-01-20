@@ -224,4 +224,7 @@
 		 color: transparent;
 		 background: transparent;
 		}
+		
+		
+	
 </style>

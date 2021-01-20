@@ -12,6 +12,8 @@
 		right: 0;
 
 		z-index: 99;
+
+		z-index: 10000000;
 }
 .uni-popup__mask.data-v-204bb005 {
 		position: absolute;

@@ -13,29 +13,32 @@
 					<checkbox color="#FD8A03" :checked="row.selectedAll" @click="firmSelectedAll(index)" />
 				</view>
 				<view class="firm-box">
-					<text class="firm-name" style="vertical-align: middle;">{{row.firmName}} </text>
+					<text class="firm-name" style="vertical-align: middle;">{{row.name}} </text>
 					<image style="width: 48upx;height: 48upx;vertical-align: middle;" src="../../static/img/btn_more_1.png" mode=""></image> 
 					<cmd-icon type="chevron-right" size="14" color="#888"></cmd-icon>
 				</view>
 			</view>
 			<!-- 企业商品列表 -->
-			<view class="firm-goods-list" v-for="(goods,i) in row.goods">
+			<view class="firm-goods-list" v-for="(goods,i) in row.product">
 				<view class="">
 					<checkbox color="#FD8A03" :checked="goods.selected" @click="selectedSole(index, i)" />
 				</view>
-				<image class="goods-img" :src="goods.img"></image>
+				<image class="goods-img" :src="goods.image_url"></image>
 				<view class="right-goods-box">
-					<view class="goods-name">{{goods.name}}</view>
-					<view class="my-10 goods-spec">
-						<text class="text">{{goods.spec}}</text> 
-						<image style="width: 32upx;height: 32upx;vertical-align: middle;transform: rotate(90deg);" src="../../static/img/btn_more_1.png" mode=""></image>
+					<view class="goods-name">{{goods.product_title}}</view>
+					<view class="my-10 goods-spec d-flex ">
+						<view class="text d-flex a-center">
+							<text>{{goods.attribute}}</text>
+							<image style="width: 32upx;height: 32upx;vertical-align: middle;transform: rotate(90deg);" src="../../static/img/btn_more_1.png" mode=""></image>
+						</view> 
+						
 					</view>
 					<view class="price-number-box">
 						<view class="red-price"><text style="font-size: 24upx;">￥</text><text> {{goods.price}}</text> </view>
 						<view class="number-box">
-							<text class="number-sub" @click="sub(index,i)">-</text>
-							<text class="number-num">{{goods.number}}</text>
-							<text class="number-add" @click="add(index,i)">+</text>
+							<text class="number-sub" @click="sub(index,i,goods.cart_id)">-</text>
+							<text class="number-num">{{goods.goods_num}}</text>
+							<text class="number-add" @click="add(index,i,goods.cart_id)">+</text>
 						</view>
 					</view>
 				</view>
@@ -50,7 +53,7 @@
 			</view>
 			<view class="right-box" >
 				<view class="total-cost"><text style="font-size: 32upx;">合计:&nbsp;</text><view class="red-price d-inline-block"><text style="font-size: 24upx;">￥</text><text style="24upx"> {{sumPrice}}</text> </view></view>
-				<text  class="account" :style="{background:selectedAllRowLength === 0?'#999999':''}">结算<text v-if="selectedAllRowLength">({{selectedAllRowLength}})</text></text>
+				<text  class="account" @click="settlement" :style="{background:selectedAllRowLength === 0?'#999999':''}">结算<text v-if="selectedAllRowLength">({{selectedAllRowLength}})</text></text>
 				<view class="" style="width: 10upx"></view>
 			</view>
 		</view>
@@ -133,23 +136,41 @@
 			}
 		},
 		methods: {
-			sub(m,n){
-				if(this.goodsList[m].goods[n].number <= 1){
-					return
-				}
-				this.goodsList[m].goods[n].number--
-				this.sumTotalPrice()
+			//结算
+			settlement(){
+				let arr = []
+				this.goodsList.forEach((item,index)=>{
+					item.product.forEach((val,index)=>{
+						if(val.selected){
+							arr.push(val.cart_id)
+						}
+					})
+				})
+				console.log('arr',arr)
+				uni.navigateTo({
+					url:`/pages/order/confirmorder?cart_id=${arr.join(',')}`
+				})
 			},
-			add(m,n) {
-				this.goodsList[m].goods[n].number++
+			sub(m,n,cart_id){
+				if(this.goodsList[m].product[n].goods_num <= 1){
+					return 
+				}
+				this.goodsList[m].product[n].goods_num--
 				this.sumTotalPrice()
+				this.numRequest(this.goodsList[m].product[n].goods_num,cart_id)
+			},
+			add(m,n,cart_id) {
+				this.goodsList[m].product[n].goods_num++
+				this.sumTotalPrice()
+				this.numRequest(this.goodsList[m].product[n].goods_num,cart_id)
 			},
 			// 选择单个商品 m 父  n 子
 			selectedSole (m, n) {
-				this.goodsList[m].goods[n].selected = !this.goodsList[m].goods[n].selected
+				console.log(555)
+				this.goodsList[m].product[n].selected = !this.goodsList[m].product[n].selected
 				// 循环设置父全选 如果全部选中  则父全选选中 否则 不选中
-				for (let i = 0; i < this.goodsList[m].goods.length; i++) {
-					if(this.goodsList[m].goods[i].selected) {
+				for (let i = 0; i < this.goodsList[m].product.length; i++) {
+					if(this.goodsList[m].product[i].selected) {
 						this.goodsList[m].selectedAll = true
 					} else {
 						this.goodsList[m].selectedAll = false
@@ -162,8 +183,8 @@
 			// 全选企业所有商品
 			firmSelectedAll (index) {
 				this.goodsList[index].selectedAll = !this.goodsList[index].selectedAll
-				for (let i = 0; i < this.goodsList[index].goods.length; i++) {
-					this.goodsList[index].goods[i].selected = this.goodsList[index].selectedAll
+				for (let i = 0; i < this.goodsList[index].product.length; i++) {
+					this.goodsList[index].product[i].selected = this.goodsList[index].selectedAll
 				}
 				this.computeSelectedAll()
 				this.sumTotalPrice()
@@ -174,8 +195,8 @@
 				let len = this.goodsList.length
 				for (let i = 0; i < len; i++) {
 					this.goodsList[i].selectedAll = this.isSelectedAllRow
-					for (let j = 0; j < this.goodsList[i].goods.length; j++) {
-						this.goodsList[i].goods[j].selected = this.goodsList[i].selectedAll
+					for (let j = 0; j < this.goodsList[i].product.length; j++) {
+						this.goodsList[i].product[j].selected = this.goodsList[i].selectedAll
 					}
 				}
 				this.sumTotalPrice()
@@ -198,10 +219,10 @@
 				this.sumPrice = 0
 				this.selectedAllRowLength = 0
 				for (let i = 0; i < this.selectedAllRowList.length; i++) {
-					for (let j = 0; j < this.selectedAllRowList[i].goods.length; j++) {
-						this.sumPrice += this.selectedAllRowList[i].goods[j].price*this.selectedAllRowList[i].goods[j].number
+					for (let j = 0; j < this.selectedAllRowList[i].product.length; j++) {
+						this.sumPrice += this.selectedAllRowList[i].product[j].price*this.selectedAllRowList[i].product[j].goods_num
 					}
-					this.selectedAllRowLength += this.selectedAllRowList[i].goods.length
+					this.selectedAllRowLength += this.selectedAllRowList[i].product.length
 				}
 				this.sumPrice = this.sumPrice.toFixed(2)
 			},
@@ -212,8 +233,8 @@
 					if(this.goodsList[i].selectedAll) {
 						this.selectedAllRowList.push(this.goodsList[i])
 					} else {
-						for (let j = 0; j < this.goodsList[i].goods.length; j++) {
-							if(this.goodsList[i].goods[j].selected) {
+						for (let j = 0; j < this.goodsList[i].product.length; j++) {
+							if(this.goodsList[i].product[j].selected) {
 								this.selectedAllRowList.push(this.copyTowArr(i, j))
 							} else {
 								continue
@@ -228,8 +249,8 @@
 				for (let key in this.goodsList[m]) {
 					arr[key] = this.goodsList[m][key]
 				}
-				arr.goods = []
-				arr.goods.push(this.goodsList[m].goods[n])
+				arr.product = []
+				arr.product.push(this.goodsList[m].product[n])
 				return arr
 			},
 			// 删除数据从对象中
@@ -237,13 +258,13 @@
 				let itemArr = []
 				for (let i = 0; i < this.goodsList.length; i++) {
 					let item = []
-					let len = Object.keys(JSON.stringify(this.goodsList[i].goods)).length
+					let len = Object.keys(JSON.stringify(this.goodsList[i].product)).length
 					for (let j = 0; j < this.selectedAllRowList.length; j++) {
-						for (let k = 0; k < this.selectedAllRowList[j].goods.length; k++) {
-							let addr = JSON.stringify(this.goodsList[i].goods).indexOf(JSON.stringify(this.selectedAllRowList[j].goods[k]))
+						for (let k = 0; k < this.selectedAllRowList[j].product.length; k++) {
+							let addr = JSON.stringify(this.goodsList[i].product).indexOf(JSON.stringify(this.selectedAllRowList[j].product[k]))
 							if(addr > 1) {
-								for (let x in this.goodsList[i].goods) {
-									let len1 = Object.keys(JSON.stringify(this.goodsList[i].goods[x])).length
+								for (let x in this.goodsList[i].product) {
+									let len1 = Object.keys(JSON.stringify(this.goodsList[i].product[x])).length
 									let num = addr - len1 - 1
 									if(num < 0) {
 										break
@@ -261,10 +282,10 @@
 					for (let x = towArr.length; x > 0; x--) {
 						console.log(towArr[x-1])
 						if(towArr[x-1] > -1) {
-							this.goodsList[i].goods.splice(towArr[x-1], 1)
+							this.goodsList[i].product.splice(towArr[x-1], 1)
 						} else { continue }
 					}
-					if(!this.goodsList[i].goods.length) {
+					if(!this.goodsList[i].product.length) {
 						this.goodsList.splice(i, 1)
 					}
 				}
@@ -285,6 +306,25 @@
 			switchClick(){
 				this.isFlag = !this.isFlag
 			},
+			//加减数量请求
+			numRequest(num,cart_id){
+				let goods = {num:num,cart_id:cart_id}
+				console.log(goods)
+				this.$http.post(
+				"",
+				{
+					access_id:uni.getStorageSync('access_id'),
+					store_id:1,
+					store_type:2,
+					module:'app',
+					action:'cart',
+					app:'up_cart',
+					goods:JSON.stringify(goods)
+				}).then(res=>{
+					console.log(res)
+				})
+			},
+			//请求购物车数据
 			requestCart(){
 				console.log("111")
 				this.$http.post(
@@ -298,11 +338,10 @@
 					app:'info'
 				}).then(res=>{
 					if(res.data.code === 200){
-						// this.goodsList = res.data.data
+						this.goodsList = this.funCick(res.data.data) 
 					}
 					console.log(res)
 					console.log('resresres')
-					
 				})
 			},
 			funCick(arr){
@@ -312,10 +351,10 @@
 						item.selected = false	
 					})
 				})
+				return arr
 			}
 		},
 		mounted() {
-			
 			this.requestCart()
 		}
 	}
@@ -410,6 +449,13 @@
 						border-radius: 10rpx;
 						background-color: #f3f3f3;
 						color: #a7a7a7;
+						>text{
+							display: inline-block;
+							// width: 150upx;
+							// white-space: nowrap;
+							// text-overflow: ellipsis;
+							// overflow: hidden;
+						}
 					}
 				}
 				.price-number-box{

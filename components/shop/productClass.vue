@@ -1,12 +1,11 @@
 <template>
 	<view class="product-class">
-		<view class="product-class-img">
-			<image src=""  mode=""></image>
+		<view class="product-class-img" v-if="shopInfo.banner.length>0"> 
+			<image :src="shopInfo.banner[0]"  mode=""></image>
 		</view>
 		<view class="product-class-list" >
 			<uni-list>
-				<uni-list-item title="列表右侧带箭头" />
-				<uni-list-item title="列表右侧带箭头" />
+				<uni-list-item v-for="(item,index) in shopInfo.list" :key="index" :title="item.pname" @click="selectType1(item)"/>
 				
 			</uni-list>
 			
@@ -19,12 +18,20 @@
 	import uniListItem  from "../uni/uni-list-item/uni-list-item"
 	import uniList  from "../uni/uni-list/uni-list"
 	export default{
-		props:['isTab'],
+		props:['isTab','shopInfo'],
 		components:{
 			uniListItem,
 			uniList
 		},
 		options: { styleIsolation: 'shared' },
+		methods:{
+			selectType1(item) {
+				console.log('item',item)
+				uni.navigateTo({
+					url:`/pages/goods/erGoods?id=${item.cid}&pname=${item.pname}`
+				})
+			},
+		}
 	}
 </script>
 

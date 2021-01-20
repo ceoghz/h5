@@ -1,6 +1,6 @@
 <template>
 	<view class="login">
-		<Head></Head>
+		<Head title="登录"></Head>
 		<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
 		<view class="login-content">
 			<view class="login-content-top clearr">
@@ -34,11 +34,11 @@
 
 <script>
 	import Head from "../../components/head.vue"
+	import {mapMutations,mapState} from 'vuex'
 	export default{
 		data(){
 			return{
 				nav_height:'',
-				access_id:'',
 				phone:'',//手机号
 				isFlag:false,
 				// 倒计时周期
@@ -58,7 +58,11 @@
 		components:{
 			Head
 		},
+		computed:{
+			...mapState(['access_id'])
+		},
 		methods:{
+			...mapMutations(['SET_ACCESS_ID']),
 			//检测手机号
 			checkPhone(){ 
 			   let phone = this.phone
@@ -172,6 +176,8 @@
 							icon:'none'
 						})
 						uni.setStorageSync("access_id",res.data.access_id)
+						this.SET_ACCESS_ID(res.data.access_id)
+								console.log(this.access_id)
 						uni.switchTab({
 							url:'/pages/tabBar/my',
 							success() {
@@ -188,7 +194,7 @@
 			},
 		},
 		onLoad() {
-			this.access_id = uni.getStorageSync("access_id")
+			// this.access_id = uni.getStorageSync("access_id")
 			this.nav_height = uni.getStorageSync("nav_height")
 		}
 	}

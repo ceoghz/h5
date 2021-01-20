@@ -1,9 +1,9 @@
 // #ifdef H5
 // var jweixin = require('jweixin-module')
 import laiketuiComm from '@/components/laiketuiCommon.vue'
-
 // #endif
-
+import store from "@/store/index.js"
+import Vue from 'vue'
 function formatTime(time) {
     if (typeof time !== 'number' || time < 0) {
         return time
@@ -409,6 +409,63 @@ function calculate_mul(arg1, arg2) {
   return (Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)).toFixed(2)
 }
 
+// 判断是否授权
+function is_shouquan(){
+	// #ifdef MP-WEIXIN
+		  if (uni.canIUse('getSetting')) {
+			  console.log(1)
+			uni.getSetting({
+			  success: res => {    
+				  console.log(2)
+				  console.log(res.authSetting['scope.userInfo'])
+				if (!res.authSetting['scope.userInfo']) {
+					console.log(3)
+					  uni.navigateTo({
+						url:'/pages/shouquan/index'
+					  })  
+				  return false
+				} else {
+					console.log(4)
+					if(!uni.getStorageSync("access_id")){
+						uni.navigateTo({
+							url:"/pages/personal/login"
+						})
+					}
+				  return true
+				}
+			  }
+			})
+		  } else {
+			uni.showToast({
+				title:'检测到当前微信版本过低，请更新微信！'
+			})
+			return false
+		  }
+    //#endif
+	//#ifdef H5 
+	console.log('mm',uni.getStorageSync('access_id'))
+	console.log('mm',!uni.getStorageSync('access_id'))
+	console.log(Vue)
+		if(!uni.getStorageSync('access_id')){
+			console.log(88)
+			uni.navigateTo({
+				url:"/pages/login/loginH5",
+				success() {
+					console.log("跳转成功")
+				},
+				fail() {
+					console.log("跳转失败")
+				}
+			})
+			return false
+		}else{
+			console.log(99)
+			return true
+		}
+	//#endif
+}
+
+
 module.exports = {
     formatTime,
     formatLocation,
@@ -422,5 +479,6 @@ module.exports = {
     guid,
 	calculate_add,
 	calculate_reduce,
-	calculate_mul
+	calculate_mul,
+	is_shouquan
 }

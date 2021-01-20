@@ -43,12 +43,13 @@
 				goodsData:[],
 			}
 		},
-		onLoad(){
-			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-		    let curParam = routes[routes.length - 1].options; //获取路由参数
-			this.fenId=curParam.id; 
-			this.title=curParam.pname;
+		onLoad(options){
+		    console.log(options)
+			this.fenId= options.id; 
+			this.title=options.pname;
 			console.log(this.fenId,this.title,'ggg')
+
+			
 			this.init()
 		},
 		methods:{

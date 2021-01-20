@@ -5,19 +5,19 @@
 			<view :style="{width: '100%',height:nav_height + 'px' }"></view>
 			<view class="shop-header-main">
 				<view class="shop-header-main-top">
-					<image class="shop-logo" src="" mode=""></image>
+					<image class="shop-logo" :src="shopInfo.shop_logo" mode=""></image>
 					<view class="shop-name felx-1">
 						<view class="shop-name-t d-flex j-sb">
-							<view class="">森山官方旗舰店</view>  
+							<view class="">{{shopInfo.shop_name}}</view>  
 							<view class="shop-share d-flex j-sb" >  
 								<image @click="collection" style="height:55upx;width: 55upx;margin-top: -7upx;" :src="isCollection?'../../static/img/shou_1.png':'../../static/img/shou_0.png'" mode=""></image>
 								<image style="height:55upx;width: 55upx;margin-top: -5upx;" src="../../static/img/btn_share.png"  mode=""></image>
 							</view>
 						</view>
 						<view class="shop-name-b">
-							<text>9999在售商品 | </text>
-							<text> 已售9999万件 </text>
-							<text> | 9999人收藏</text>
+							<text>{{shopInfo.quantity_on_sale}}在售商品 | </text>
+							<text> 已售{{shopInfo.quantity_sold}}万件 </text>
+							<text> | {{shopInfo.collection_num}}人收藏</text>
 						</view>
 					</view>
 				</view>
@@ -31,9 +31,9 @@
 		</view>
 		<view class="shop-content">
 			<scroll-view scroll-y='true' style="height: 100%;">
-				<Recommended v-if="isTab == 1" :isTab = "isTab" ></Recommended>
-				<AllProduct v-if="isTab == 2" :isTab = "isTab"></AllProduct>
-				<ProductClass v-if="isTab == 3" :isTab = "isTab"></ProductClass>
+				<Recommended v-if="isTab == 1" :isTab = "isTab" :shopInfo = "shopInfo"></Recommended>
+				<AllProduct v-if="isTab == 2" :isTab = "isTab" :shopInfo = "shopInfo"></AllProduct>
+				<ProductClass v-if="isTab == 3" :isTab = "isTab"  :shopInfo = "shopInfo"></ProductClass>
 			</scroll-view>
 		</view>
 	</view>
@@ -55,6 +55,8 @@
 				],
 				nav_height:0,
 				isCollection:false,
+				type:'',//
+				shopInfo:'',//店铺信息
 			}
 		},
 		components:{
@@ -68,18 +70,21 @@
 			shopRequest(type){
 				this.isTab = type
 				console.log(this.isTab)
-				// this.$http.post("",{
-				// 	access_id:uni.getStorageSync("access_id"),
-				// 	store_id:1,
-				// 	store_type:2,
-				// 	module:'app',
-				// 	action:'mch',
-				// 	m:'store_homepage',
-				// 	shop_id:'',//店铺id
-				// 	type:type
-				// }).then(res=>{
-				// 	console.log(res)
-				// })
+				this.$http.post("",{
+					access_id:uni.getStorageSync("access_id"),
+					store_id:1,
+					store_type:2,
+					module:'app',
+					action:'mch',
+					m:'store_homepage',
+					shop_id:this.shop_id,//店铺id
+					type:type
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code === 200){
+						this.shopInfo = res.data.data
+					}
+				})
 			},
 			//收藏店铺
 			collection(){
@@ -96,6 +101,10 @@
 				// 	console.log(res)
 				// })
 			}
+		},
+		onLoad(options) {
+			this.shop_id = options.id
+			this.shopRequest(1)
 		},
 		created() {
 			this.nav_height = uni.getStorageSync('nav_height')

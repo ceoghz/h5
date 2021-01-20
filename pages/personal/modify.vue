@@ -1,6 +1,6 @@
 <template>
 	<view class="add-address">
-			<Head></Head>
+			<Head title="修改地址"></Head>
 			<view class="" style="height: 64px;width: 100%;"></view>
 			<view class="add-address-content">
 				<view class="add-address-content-1 d-felx a-center">
@@ -83,6 +83,12 @@
 					address:this.detail_adr,
 				}).then(res=>{
 					console.log(res)
+					if(res.data.code === 200){
+						uni.navigateBack({
+						    delta: 1
+						})
+					
+					}
 				})
 			},
 			//获取地址信息

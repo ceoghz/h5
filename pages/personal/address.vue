@@ -1,10 +1,10 @@
 <template>
 	<view class="address">
-		<Head></Head>
+		<Head title="地址列表"></Head>
 		<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
 		<view class="address-main">
-			<scroll-view scroll-y="true"  style="background-color: #F4F4F4;">
-				<view class="address-list d-flex" v-for="(item,index) in adr_list" :key="index">
+			<scroll-view scroll-y="true"  style="background-color: #F4F4F4;height: 100%;">
+				<view @click="jumpOrder(item)" class="address-list d-flex" v-for="(item,index) in adr_list" :key="index">
 					<view class="address-list-left d-felx j-sb">
 						<image  v-if="item.is_default === '1' " class="img" src="../../static/img/icon_add@2x.png" style="height: 92upx;width: 92upx;" mode=""></image>
 						<view v-else class="img d-flex j-center a-center" style="width: 92upx;height: 92upx;border-radius: 50%;background: #BABABA;color: #FFFFFF;font-size: 46upx;">
@@ -19,8 +19,8 @@
 						</view>
 						<view class="address-list-right-2">{{item.address_xq}}</view>
 						<view class="address-list-right-3">
-							<button class="bnn" @click="togglePopup(item.addr_id,item.is_default)" style="color: #FD3E30;"  type="default" size="mini" plain=true>删除</button>
-							<button class="bnn" @click="jumpModify(item.addr_id)" style="border-right: 2upx solid #BABABA;color: #666666;" type="default" size="mini" plain=true>修改</button> 
+							<button class="bnn" @click.stop="togglePopup(item.addr_id,item.is_default)" style="color: #FD3E30;"  type="default" size="mini" plain=true>删除</button>
+							<button class="bnn" @click.stop="jumpModify(item.addr_id)" style="border-right: 2upx solid #BABABA;color: #666666;" type="default" size="mini" plain=true>修改</button> 
 						</view>
 					</view>
 				</view>
@@ -61,6 +61,7 @@
 				adr_list:[],//地址列表
 				type:'center',
 				content: '顶部弹 popup',
+				jumpType:0
 			}
 		},
 		components:{
@@ -79,14 +80,25 @@
 				})
 			},
 			jumpModify(addr_id){
+				console.log(888)
 				uni.navigateTo({
 					url:`/pages/personal/modify?addr_id=${addr_id}`,
 					success() {
 						console.log("跳转成功")
+					},
+					fail() {
+						console.log(555)
 					}
 				})
 			},
-			
+			//跳转到确认订单页面
+			jumpOrder(item){
+				if(this.jumpType !== '1' ) return false
+				uni.setStorageSync("address_id",item.id)
+				uni.navigateBack({
+				    delta: 1
+				});
+			},
 			//请求地址列表
 			requestList(){
 				this.$http.post("",{
@@ -106,6 +118,7 @@
 				})
 			},
 			togglePopup(addr_id,is_default) {
+				console.log(111)
 				// if(is_default === '1'){
 				// 	uni.showToast({
 				// 		title:'默认地址不可删除！',
@@ -159,6 +172,9 @@
 		},
 		onShow() {
 			this.requestList()
+		},
+		onLoad(options) {
+			this.jumpType = options.type 
 		},
 		created() {
 			this.nav_height = uni.getStorageSync('nav_height')

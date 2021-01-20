@@ -1,5 +1,4 @@
 .heade.data-v-3de01b9b {
-  background: #FFFFFF;
   width: 100%;
   position: fixed;
   left: 0;
@@ -8,7 +7,6 @@
 }
 .heade .heade-top.data-v-3de01b9b {
   width: 100%;
-  background: #FFFFFF;
 }
 .heade .heade-bottom.data-v-3de01b9b {
   width: 100%;

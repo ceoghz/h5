@@ -125,6 +125,9 @@
   background-color: #f3f3f3;
   color: #a7a7a7;
 }
+.goods-list .row .firm-goods-list .right-goods-box .goods-spec .text > text.data-v-460911e8 {
+  display: inline-block;
+}
 .goods-list .row .firm-goods-list .right-goods-box .price-number-box.data-v-460911e8 {
   display: -webkit-box;
   display: -webkit-flex;
