@@ -1,11 +1,8 @@
 <template>
 	<view class="fen">
-		<Headd></Headd>
-		<view class="head">
-			<view class="title">
-				<view class="back" @click="back()"><image src="../../static/img/back.png"></image></view>
-				<text>找相似</text>
-			</view>
+		<view class="header">
+			<Head title="找相似"></Head>
+			<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
 		</view>
 	    <view class="main">
 			<!-- 去购买 -->
@@ -44,18 +41,23 @@
 </template>
 
 <script>
-	import Headd from "../../components/head.vue"
+	import Head from "@/components/head.vue"
 	export default{
 		components: {
-
+            Head
 		},
+		
 		data(){
 			return{
+				nav_height:0,
 				goodsId:'',
 				goodsData:[],//相似商品
 				buyGoods:{},//去购买商品信息
 				shopName:'',
 			}
+		},
+		created() {
+			this.nav_height = uni.getStorageSync('nav_height')
 		},
 		onLoad(){
 			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组

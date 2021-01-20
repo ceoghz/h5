@@ -30,7 +30,7 @@
 									<view class="" style="margin-left:20upx;">{{item1.mch_name}}</view>
 									<image src="../../static/img/btn_back.png" style="height: 48upx;width: 48upx;" mode=""></image>
 								</view>
-								<view class="d-flex" v-for="(item2,index) in item1.order_details" :key="index" @click="jumporderdetail" :data-id="item2.pid">
+								<view class="d-flex" v-for="(item2,index) in item1.order_details" :key="index" @click="jumporderdetail" :data-id="item2.id" >
 									<image :src="item2.product_img" style="width: 200upx;height: 200upx;margin-left: 20upx;" mode=""></image>
 									<view class="felx-1 pro d-flex flex-column">
 										<view class="pro-name d-felx j-sb">
@@ -81,7 +81,7 @@
 									<view class="" style="margin-left:20upx;">{{item1.mch_name}}</view>
 									<image src="../../static/img/btn_back.png" style="height: 48upx;width: 48upx;" mode=""></image>
 								</view>
-								<view class="" v-for="(item2,index) in item1.order_details" :key="index"  @click="jumporderdetail" :data-id="item2.pid">
+								<view class="" v-for="(item2,index) in item1.order_details" :key="index" @click="jumporderdetail" :data-id="item2.id" >
 									<view class="d-flex" >
 										<image :src="item2.product_img" style="width: 200upx;height: 200upx;margin-left: 20upx;" mode=""></image>
 										<view class="felx-1 pro d-flex flex-column">
@@ -167,12 +167,13 @@ import {calculate_reduce} from "@/utils/util.js"
 			},
 			//跳转订单详情 
 			jumporderdetail(e){
-				let res = e.currentTarget.dataset
-				uni.navigateTo({
-					url:`/pages/personal/orderDetail?id=${res.id}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
-					icon:'none'
-				})
-			},
+			    let res = e.currentTarget.dataset
+				// console.log(e,`/pages/personal/orderDetail?id=${res.id}`,'oooo')
+			    uni.navigateTo({
+			     url:`/pages/personal/orderDetail?id=${res.id}`,
+			     icon:'none'
+			    })
+			   },
 			//查看物流
 			jumplogistics(e){
 				let res =e.currentTarget.dataset

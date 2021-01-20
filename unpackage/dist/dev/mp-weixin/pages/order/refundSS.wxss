@@ -1,0 +1,97 @@
+.fen.data-v-6899b9b2 {
+  height: 100%;
+  width: 100%;
+  font-family: '苹方-简 常规体';
+  background: #f4f4f4;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.fen .header.data-v-6899b9b2 {
+  width: 100%;
+}
+.main.data-v-6899b9b2 {
+  background-color: #F4F4F4;
+  padding: 20rpx 30rpx;
+}
+.success.data-v-6899b9b2 {
+  width: 690rpx;
+  height: 366rpx;
+  background-color: #fff;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  padding-top: 60rpx;
+}
+.shou-img.data-v-6899b9b2 {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 auto 40rpx;
+}
+.shou-img image.data-v-6899b9b2 {
+  width: 120rpx;
+  height: 120rpx;
+}
+.success view.data-v-6899b9b2 {
+  font-size: 36rpx;
+  line-height: 50rpx;
+  color: #999;
+  text-align: center;
+}
+.success .shou-s.data-v-6899b9b2 {
+  font-size: 40rpx;
+  line-height: 56rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40rpx;
+}
+.message.data-v-6899b9b2 {
+  background-color: #fff;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  padding: 20rpx;
+  width: 650rpx;
+  margin: 20rpx 0 40rpx;
+}
+.message view.data-v-6899b9b2 {
+  font-size: 32rpx;
+  line-height: 44rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+}
+.message .shou-head.data-v-6899b9b2 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40rpx;
+}
+.message .shou-name.data-v-6899b9b2 {
+  width: 650rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ping-img.data-v-6899b9b2 {
+  width: 650rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.ping-img view.data-v-6899b9b2 {
+  width: 150rpx;
+  height: 150rpx;
+  margin-right: 22rpx;
+  margin-bottom: 22rpx;
+}
+.ping-img view image.data-v-6899b9b2 {
+  width: 150rpx;
+  height: 150rpx;
+}
+

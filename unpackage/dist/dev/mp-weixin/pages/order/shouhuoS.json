@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "收货成功",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "head": "/components/head"
+  }
+}

@@ -1,11 +1,10 @@
 <template>
 	<view class="fen">
-		<Headd></Headd>
-		<view class="head">
-			<view class="title">
-				<view class="back" @click="back()"><image src="../../static/img/back.png"></image></view>
-				<text>{{erData.pname}}</text>
-			</view>
+		
+		<view class="header">
+			<Head :title="erData.pname"></Head>
+			<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
+			
 			<view class="example-body">
 				<uni-search-bar radius="100" placeholder="请搜索" @input="input" @confirm="search" />
 			</view>
@@ -63,11 +62,12 @@
 </template>
 
 <script>
-	import Headd from "../../components/head.vue"
+	import Head from "@/components/head.vue"
 	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
 	export default{
 		components: {
 			uniSearchBar,
+			Head
 		},
 		data(){
 			return{

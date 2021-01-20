@@ -1,5 +1,6 @@
 .home.data-v-28aa9427 {
   z-index: -11;
+  background-color: #F4F4F4;
 }
 .home_top1.data-v-28aa9427 {
   background-color: #F4F4F4;
@@ -48,13 +49,6 @@
   display: -webkit-flex;
   display: flex;
 }
-.home_main.data-v-28aa9427 {
-  padding: 0 30rpx;
-  padding-top: 40rpx;
-  background-color: #F4F4F4;
-  position: relative;
-  z-index: 1;
-}
 .lun.data-v-28aa9427 {
   height: 214rpx;
   -webkit-border-radius: 0 0 60rpx 60rpx;
@@ -100,6 +94,13 @@
   line-height: 80rpx;
   text-align: center;
   padding-bottom: 30rpx;
+}
+.home_main.data-v-28aa9427 {
+  margin-top: 332rpx;
+  padding: 0 30rpx;
+  background-color: #F4F4F4;
+  position: relative;
+  z-index: 1;
 }
 .fen.data-v-28aa9427 {
   width: 100%;

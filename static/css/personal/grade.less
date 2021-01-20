@@ -1,14 +1,26 @@
+
 .fen{
-	min-height:100vh;
-	background-color: #fff;
-	font-family: '苹方-简 常规体';
-	
-}
-// .fen>.head{
-// 	// padding-top:108upx;
-// 	height:108upx;
-	
-// }
+		height:100%;
+		width:100%;
+		font-family: '苹方-简 常规体';
+		background: #f4f4f4;
+		display: flex;
+		flex-direction: column;
+		.header{
+			width: 100%;
+		}
+		.grade-gui{
+			background: #fff;
+			display:flex;
+			justify-content: flex-end;
+		}
+		.grade-gui view{
+			color:#333;
+			font-size:32upx;
+			// line-height:50upx;
+			margin-right:30upx;
+		}
+	}
 .title{
 	width:750upx;
 	height:108upx;
@@ -48,7 +60,7 @@
 }
 .main{
 	background-color: #fff;
-	padding-top:108upx;
+	// padding-top:108upx;
 }
 .totalZ{
 	width:750upx;

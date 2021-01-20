@@ -1,46 +1,32 @@
-.heade.data-v-3de01b9b {
-  background: #FFFFFF;
-  width: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-}
-.heade .heade-top.data-v-3de01b9b {
-  width: 100%;
-  background: #FFFFFF;
-}
-.heade .heade-bottom.data-v-3de01b9b {
-  width: 100%;
-  position: relative;
-}
-.heade .heade-bottom .head-back.data-v-3de01b9b {
-  height: 60rpx;
-  width: 60rpx;
-  position: absolute;
-  top: 15rpx;
-  top: 50%;
-  margin-top: -30rpx;
-}
-.heade .heade-bottom .head-title.data-v-3de01b9b {
-  width: 100%;
+.fen.data-v-77ec1801 {
   height: 100%;
+  width: 100%;
+  font-family: '苹方-简 常规体';
+  background: #f4f4f4;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  font-size: 40rpx;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
 }
-
-.fen.data-v-77ec1801 {
-  min-height: 100vh;
-  background-color: #fff;
-  font-family: '苹方-简 常规体';
+.fen .header.data-v-77ec1801 {
+  width: 100%;
+}
+.fen .grade-gui.data-v-77ec1801 {
+  background: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+.fen .grade-gui view.data-v-77ec1801 {
+  color: #333;
+  font-size: 32rpx;
+  margin-right: 30rpx;
 }
 .title.data-v-77ec1801 {
   width: 750rpx;
@@ -84,7 +70,6 @@
 }
 .main.data-v-77ec1801 {
   background-color: #fff;
-  padding-top: 108rpx;
 }
 .totalZ.data-v-77ec1801 {
   width: 750rpx;

@@ -139,9 +139,9 @@
 				abb_list:[
 					{img_src:'../../static/img/icon_collection.png',name:'我的收藏',adr:'/pages/my/collection'},
 					{img_src:'../../static/img/icon_collection@2x(1).png',name:'收货地址',adr:'/pages/personal/address'},
-					{img_src:'../../static/img/icon_collection@2x(2).png',name:'在线客服',adr:'/pages/personal/address'},
-					{img_src:'../../static/img/icon_collection@2x(3).png',name:'关于我们',adr:'/pages/personal/address'},
-					{img_src:'../../static/img/icon_collection@2x(4).png',name:'分享好友',adr:'/pages/personal/address'},
+					{img_src:'../../static/img/icon_collection@2x(2).png',name:'在线客服',adr:'/pages/order/shouhuoS'},
+					{img_src:'../../static/img/icon_collection@2x(3).png',name:'关于我们',adr:'/pages/personal/yinXie'},
+					{img_src:'../../static/img/icon_collection@2x(4).png',name:'分享好友',adr:'/pages/order/refundSS'},
 					{img_src:'../../static/img/icon_collection(5).png',name:'浏览足迹',adr:'/pages/personal/address'}
 				],
 				userInfo:'',//用户信息

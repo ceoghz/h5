@@ -1,17 +1,23 @@
 <template>
     <view class="fen">
-		<Headd></Headd>
-      
+		<view class="header">
+			<Head title="客服"></Head>
+			<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
+		</view>
         <template v-if="kefu_url">
             <web-view :src="kefu_url"></web-view>
         </template>
     </view>
 </template>
 <script>
-	import Headd from "../../components/head.vue"
+	import Head from "@/components/head.vue"
     export default {
+		components:{
+			Head
+		},
         data () {
             return {
+				nav_height:0,
                 sendInfo: '',
                 infos: '',
                 pull: false,
@@ -23,6 +29,9 @@
 				pid:""
             }
         },
+		created() {
+			this.nav_height = uni.getStorageSync('nav_height')
+		},
         async onLoad (option) {
             this.setAppTitle()
             this.pid = option.pid

@@ -2,6 +2,16 @@
   "pages": [
     "pages/tabBar/my",
     "pages/personal/myOrder",
+    "pages/personal/coupons",
+    "pages/order/refundSS",
+    "pages/order/shouhuoS",
+    "pages/personal/aboutMe",
+    "pages/personal/userXie",
+    "pages/personal/yinXie",
+    "pages/goods/allGoods",
+    "pages/personal/orderDetail",
+    "pages/order/afterSale",
+    "pages/my/aboutMe",
     "pages/order/logistics",
     "pages/pay/payorder",
     "pages/pay/paycomplete",
@@ -32,8 +42,7 @@
     "pages/goods/alikeGoods",
     "pages/goods/goodsDetail",
     "pages/aboutGoods/allPing",
-    "pages/aboutGoods/service",
-    "pages/personal/orderDetail"
+    "pages/aboutGoods/service"
   ],
   "subPackages": [],
   "window": {

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "隐私协议",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "head": "/components/head",
+    "mp-html": "/components/mp-html/mp-html"
+  }
+}

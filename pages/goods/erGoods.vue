@@ -1,11 +1,8 @@
 <template>
 	<view class="fen">
-		<Headd></Headd>
-		<view class="head">
-			<view class="title">
-				<view class="back" @click="back()"><image src="../../static/img/back.png"></image></view>
-				<text>{{title}}</text>
-			</view>
+		<view class="header">
+			<Head :title="title"></Head>
+			<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
 		</view>
 	    <view class="main">
 			<!-- 产品 -->
@@ -31,17 +28,21 @@
 </template>
 
 <script>
-	import Headd from "../../components/head.vue"
+	import Head from "@/components/head.vue"
 	export default{
 		components: {
-
+			Head
 		},
 		data(){
 			return{
+				nav_height:0,
 				fenId:'',
 				title:'',
 				goodsData:[],
 			}
+		},
+		created() {
+			this.nav_height = uni.getStorageSync('nav_height')
 		},
 		onLoad(){
 			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组

@@ -1,12 +1,9 @@
 <template>
 	<view class="fen">
-		<Headd></Headd>
-		<!-- <view class="head-z"> -->
-			<view class="title">
-				<view class="back" @click="back()"><image src="../../static/img/back.png"></image></view>
-				<text>商品详情</text>
-			</view>
-		<!-- </view> -->
+		<view class="header">
+			<Head title="商品详情"></Head>
+			<view class="" :style="{height:nav_height+'px',width:'100%'}"></view>
+		</view>
 		<!-- 轮播图 -->
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
@@ -136,7 +133,7 @@
 </template>
 
 <script>
-	import Headd from "../../components/head.vue"
+	import Head from "@/components/head.vue"
 	import mpHtml from '@/components/mp-html/mp-html'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue'
@@ -154,6 +151,7 @@
 	}
 	export default{
 		components: {
+			Head,
            mpHtml,
 		   uniPopup,
 		   uniPopupMessage,
@@ -163,6 +161,7 @@
 		},
 		data(){
 			return{
+				nav_height:0,
 				mask:false,
 				goodsId:'',
 				goodsData:{},//商品数据	
@@ -199,6 +198,9 @@
 				skuKey:false,
 				skuMode:1,
 			}
+		},
+		created() {
+			this.nav_height = uni.getStorageSync('nav_height')
 		},
 		onLoad(){
 			that = this;
@@ -292,14 +294,14 @@
 								"goods_id":this.goodsId,
 								"goods_name":this.goodsData.product_title,
 								"image":item.img_url,
-								"price":item.price,
+								"price":(item.price)*100,
 								"sku_name":obj2,
 								"sku_name_arr":str2,
 								"stock":item.num
 							})
 						}
 					})
-					console.log(guiData,'bbb')
+					console.log(guiData,'bbiiib')
 					
 				})
 			},

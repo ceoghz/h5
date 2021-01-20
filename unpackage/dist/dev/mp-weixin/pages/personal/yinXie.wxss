@@ -1,0 +1,31 @@
+.fen.data-v-51b7301c {
+  height: 100%;
+  width: 100%;
+  font-family: '苹方-简 常规体';
+  background: #f4f4f4;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.fen .header.data-v-51b7301c {
+  width: 100%;
+}
+.main.data-v-51b7301c {
+  background-color: #f4f4f4;
+  padding: 20rpx 30rpx;
+}
+.goods.data-v-51b7301c {
+  background-color: #fff;
+  padding: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+}
+.goods view.data-v-51b7301c {
+  font-size: 30rpx;
+  line-height: 60rpx;
+}
+

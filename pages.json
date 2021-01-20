@@ -10,13 +10,87 @@
 			"backgroundTextStyle": "dark"
 		}
 	},
-		{
-			"path":"pages/personal/myOrder",
-			"style":{
-				"navigationBarTitleText":"我的订单",
-				"navigationStyle" : "custom"
-			}
-		},
+	{
+		"path":"pages/personal/myOrder",
+		"style":{
+			"navigationBarTitleText":"我的订单",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path":"pages/personal/coupons",
+		"style":{
+			"navigationBarTitleText":"领券中心",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path": "pages/order/refundSS",
+		"style": {
+			"navigationBarTitleText": "申请退款成功",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path": "pages/order/shouhuoS",
+		"style": {
+			"navigationBarTitleText": "收货成功",
+			"navigationStyle" : "custom"
+		}
+	},
+	
+	{
+		"path":"pages/personal/aboutMe",
+		"style":{
+			"navigationBarTitleText":"关于我们",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path":"pages/personal/userXie",
+		"style":{
+			"navigationBarTitleText":"用户协议",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path":"pages/personal/yinXie",
+		"style":{
+			"navigationBarTitleText":"隐私协议",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path": "pages/goods/allGoods",
+		"style": {
+			"navigationBarTitleText": "品牌商品",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path": "pages/personal/orderDetail",
+		"style": {
+			"navigationBarTitleText": "订单详情",
+			"navigationStyle" : "custom"
+		}
+	},
+	{
+		"path": "pages/order/afterSale",
+		"style": {
+			"navigationBarTitleText": "售后详情",
+			"navigationStyle" : "custom"
+		}
+	},
+	
+	{
+		"path":"pages/my/aboutMe",
+		"style":{
+			"navigationBarTitleText":"关于我们",
+			"navigationStyle" : "custom"
+		}
+	},
+	
+		
 		{
 			"path":"pages/order/logistics",
 			"style":{
@@ -249,14 +323,9 @@
 				"navigationBarTitleText": "客服",
 				"navigationStyle" : "custom"
 			}
-		},
-		{
-			"path": "pages/personal/orderDetail",
-			"style": {
-				"navigationBarTitleText": "订单详情",
-				"navigationStyle" : "custom"
-			}
 		}
+		
+		
 		
 	],
 	"globalStyle": {

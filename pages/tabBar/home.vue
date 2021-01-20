@@ -1,10 +1,7 @@
 <template>
 	<view class="home">
 		<view class="home_top1">
-			
 			<view class="home_top">
-				
-				
 				<view class="" style="position: fixed;top: 0rpx;left: 0rpx;z-index:99;">
 					<!-- #ifdef MP-WEIXIN -->
 					<heads title="乐活精选" :border="true" :returnFlag="true"  ishead_w="1"></heads>
@@ -48,6 +45,9 @@
 		</view>
 		
 		<view class="home_main">
+			<!-- #ifdef MP-WEIXIN -->
+			<view style="height:108upx;"></view>
+			<!-- #endif -->
 			<!-- 分类 -->
 			<view class="fen">
 				<view class="fen-list" v-for="(item,index) in fenData" :key="index" @click="erFen(item.cid)">
