@@ -70,11 +70,11 @@
 						<view class="order-list-3">
 							<button  class="btn1"  type="default" size="mini" plain=true>客服</button>
 							<button  class="btn1" v-if="item.status === 0" type="default" size="mini" plain=true @click="cancelOrder(item.id)">取消订单</button>
-							<button class="btn2" type="default" size="mini" plain=true>去支付</button>
+							<button  @click="goPay" class="btn2" type="default" size="mini" plain=true>去支付</button>
 						</view>
 					</view>
 					<!-- //其他状态 -->
-					<view v-else class="order-list1" v-if="item.mch.length > 0">
+					<view  class="order-list1" v-if="item.mch.length > 0&&item.status !== 0">
 						<view class="order-list-1">
 							<view class="abb d-felx flex-column" v-for="(item1,index) in item.mch"  :key="index">
 								<view class="d-felx a-center"   @tap="jumpShop(item1.mch_id)"  style="width: 100%;height: 88upx;display:flex;align-items: center;">
@@ -109,12 +109,13 @@
 											<button  class="btn1"   type="default" size="mini" plain=true>客服</button>
 											<button  class="btn1" v-if="item.status === 0&& item2.order_details_status !== 7"  type="default" size="mini" plain=true>取消订单</button>
 											<button  class="btn1" v-if="item2.order_details_status == 0 || item2.order_details_status == 1|| item2.order_details_status == 2 " @click="jumpRefund" :data-id="item2.id" :data-pid ="item2.p_id" :data-status="item.status" :data-productinfo= "item2"  type="default" size="mini" plain=true>申请退款</button>
-											<button class="btn1" v-if="item2.order_details_status === 7 " @click="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>删除订单</button>
+											<button class="btn1" v-if="item2.order_details_status === 7 " @click.stop="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>删除订单</button>
 											<button class="btn1" v-if="item2.order_details_status === 2 || item2.order_details_status === 3|| item2.order_details_status == 12 || item2.order_details_status == 5" @click="jumplogistics"  :data-id = "item2.id"   type="default" size="mini" plain = true>查看物流</button>
-											<button class="btn2" v-if="item2.order_details_status === 2 " @click="delGuan" :data-id = "item2.id"  type="default" size="mini" plain = true>确认收货</button> 
+											<button class="btn2" v-if="item2.order_details_status === 2 " @click.stop="ConfirmGoods" :data-id = "item2.id"  type="default" size="mini" plain = true>确认收货</button> 
 											<button class="btn1" v-if="item2.order_details_status == 3 || item2.order_details_status == 5" @click="joinCart"  :data-id = "item2.id"  type="default" size="mini" plain = true>加入购物车</button>
 											<button class="btn2" v-if="item2.order_details_status === 3 " @click="jumpevaluation" :data-productinfo= "item2" :data-id = "item2.id"  type="default" size="mini" plain = true>去评价</button> 
-											<button class="btn1" v-if="item2.order_details_status == 12" @click="jumpevaluation" :data-productinfo= "item2" :data-id = "item2.id"  type="default" size="mini" plain = true>撤销申请</button> 
+											<button class="btn1" v-if="item2.order_details_status == 12" @click.stop="undo" :data-productinfo= "item2" :data-id = "item2.id"  type="default" size="mini" plain = true>撤销申请</button> 
+											<button class="btn2" v-if="item2.order_details_status === 12" @click.stop="jumpAfter" :data-productinfo= "item2" :data-id = "item2.return_order_id"  type="default" size="mini" plain = true>寄回商品</button>
 									</view>
 									<view class="" style="width: 100%;height: 0;border-top: 2upx solid #F4F4F4;"></view>
 								</view>
@@ -167,23 +168,37 @@ import {calculate_reduce} from "@/utils/util.js"
 				// 	icon:'none'
 				// })
 			},
+			//跳转到支付页面 
+			goPay(e){
+				let res = e.currentTarget.dataset
+				var payIenfo = {}
+				payInfo.sNo = res.sNo
+				payInfo.total = res.z_price
+				console.log("abb")
+				console.log("aa",payIenfo)
+				// uni.navigateTo({
+				// 	url:`/pages/pay/payorder?payIenfo${encodeURIComponent(JSON.stringify(payInfo))}`,
+				// 	icon:'none'
+				// })
+			},
 			//跳转评价
 			jumpevaluation(e){
 				let res = e.currentTarget.dataset
 				console.log(res)
 				uni.navigateTo({
-					url:`/pages/evaluation/evaluation?id=${res.id}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
+					url:`/pages/evaluation/evaluation?id=${res.id}&productinfo=${encodeURIComponent(JSON.stringify(res.productinfo))}`,
 					icon:'none'
 				})
 			},
 			//跳转订单详情 
 			jumporderdetail(e){
-				let res = e.currentTarget.dataset
+				console.log(e)
+				let res = e.currentTarget.dataset 
 				uni.navigateTo({
 					url:`/pages/personal/orderDetail?id=${res.id}`,
-					icon:'none'
 				})
 			},
+		
 			//查看物流
 			jumplogistics(e){
 				let res =e.currentTarget.dataset
@@ -198,7 +213,14 @@ import {calculate_reduce} from "@/utils/util.js"
 				let res =e.currentTarget.dataset
 				uni.navigateTo({
 					url:`/pages/order/service?id=${res.id}&status=${res.status}&pid=${res.pid}&productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
-					icon:'none'
+				})	
+			},
+			//跳转到寄回商品
+			jumpAfter(e){
+				let res =e.currentTarget.dataset
+				console.log(res)
+				uni.navigateTo({
+					url:`/pages/order/after?productinfo=${encodeURIComponent( JSON.stringify(res.productinfo))}`,
 				})	
 			},
 			searchClick(){
@@ -248,6 +270,49 @@ import {calculate_reduce} from "@/utils/util.js"
 						uni.showToast({
 							title:res.data.message,
 							icon:'none'
+						})
+					}
+				})
+			},
+			//撤销申请
+			undo(e){
+				console.log(e)
+				let res = e.currentTarget.dataset 
+				this.$http.post('',{
+					access_id:uni.getStorageSync("access_id"),
+					store_id:1,
+					store_type:2,
+					module:'app',
+					action:'order',
+					app:'cancelRefund',
+					order_details_id:res.id
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code === 200){
+						uni.showToast({
+							title:res.data.message,
+							icon:'none'
+						})
+					}
+				})
+			},
+			//确认收货 
+			ConfirmGoods(e){
+				console.log(e)
+				let res = e.currentTarget.dataset 
+				this.$http.post('',{
+					access_id:uni.getStorageSync('access_id'),
+					store_id:1,
+					store_type:2,
+					module:'app',
+					action:"order",
+					app:'recOrder',
+					id:res.id
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code === 200){
+						uni.showToast({
+							title:res.data.message
 						})
 					}
 				})
